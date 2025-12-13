@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Básica en JavaScript</title>
+</head>
+<body>
+
+    <h1>Calculadora de Operaciones Básicas (Ver Consola)</h1>
+    <p>Abre la consola de desarrollador de tu navegador (F12) para ver la ejecución del código y los resultados.</p>
+
+    <script>
+        // ====================================================================
+        // PASO 1: Declaración de Variables
+        // ====================================================================
+
+        // Usaremos 'let' para que las variables puedan cambiar su valor si se ingresan nuevos datos.
+        let numero1 = 50; 
+        let numero2 = 10; 
+        let operacionDeseada = "division"; 
+
+        console.log("--- Calculadora Inicializada con Valores Fijos ---");
+        console.log(`Número 1: ${numero1}, Número 2: ${numero2}, Operación: ${operacionDeseada}`);
+
+        // ====================================================================
+        // PASO 2 y 3: Función para realizar operaciones con Condicionales y Validaciones
+        // ====================================================================
+
+        /**
+         * Realiza una operación matemática básica entre dos números.
+         * @param {number} num1 El primer número.
+         * @param {number} num2 El segundo número.
+         * @param {string} operacion El tipo de operación ("suma", "resta", etc.).
+         * @returns {number|string} El resultado de la operación o un mensaje de error.
+         */
+        function realizarOperacion(num1, num2, operacion) {
+            let resultado;
+            const op = operacion.toLowerCase(); // Normalizamos la entrada
+
+            // Estructura condicional (if...else if...else) para la lógica
+            if (op === "suma") {
+                resultado = num1 + num2;
+            } else if (op === "resta") {
+                resultado = num1 - num2;
+            } else if (op === "multiplicacion") {
+                resultado = num1 * num2;
+            } else if (op === "division") {
+                // Validación de división por cero
+                if (num2 === 0) {
+                    return "Error: ¡No se puede dividir por cero!";
+                }
+                resultado = num1 / num2;
+            } else {
+                // Validación de operación no válida
+                return "Error: Operación no válida. Use: suma, resta, multiplicacion o division.";
+            }
+
+            return resultado; // Devolvemos el resultado
+        }
+
+        // ====================================================================
+        // PASO 4 y 5: Bucle para realizar múltiples operaciones y prueba
+        // Usaremos un array para simular la entrada del usuario en la consola.
+        // ====================================================================
+
+        console.log("\n=======================================================");
+        console.log("INICIO DEL BUCLE: Modo Múltiples Operaciones");
+        console.log("=======================================================");
+
+        // Array que simula las entradas del usuario (simulando que el usuario usa 'prompt')
+        const simulacionEntradas = [
+            { n1: 15, n2: 5, op: "resta" },
+            { n1: 7, n2: 8, op: "multiplicacion" },
+            { n1: 10, n2: 0, op: "division" }, 
+            { n1: 5, n2: 2, op: "potencia" }, 
+            { op: "salir" } // Comando para salir del bucle
+        ];
+
+        let indice = 0;
+        let continuarOperando = true; 
+
+        // Bucle while: se ejecuta mientras la condición sea verdadera
+        while (continuarOperando) {
+            // Detener el bucle si no hay más datos simulados
+            if (indice >= simulacionEntradas.length) {
+                break;
+            }
+
+            const entradaActual = simulacionEntradas[indice];
+
+            // Condicional para verificar el comando de salida
+            if (entradaActual.op && entradaActual.op.toLowerCase() === "salir") {
+                console.log("\n¡Gracias por usar la calculadora! Mensaje de despedida.");
+                continuarOperando = false; // Se cambia la condición para detener el while
+            } else {
+                // Ejecutamos la función de la calculadora
+                const resultadoOperacion = realizarOperacion(entradaActual.n1, entradaActual.n2, entradaActual.op);
+
+                // Mostramos el resultado
+                console.log(`\nOperación ${indice + 1}:`);
+                console.log(`  Entrada: ${entradaActual.n1} ${entradaActual.op} ${entradaActual.n2}`);
+                console.log(`  Resultado: ${resultadoOperacion}`);
+            }
+
+            indice++;
+        }
+    </script>
+
+</body>
+</html>
